@@ -13,7 +13,7 @@ public class Target : MonoBehaviour
     private float xRange = 4.0f;
     private float ySpawnPos = -6.0f;
 
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +29,7 @@ public class Target : MonoBehaviour
             ForceMode.Impulse);
         //set the position of the target to a random position
         transform.position = RandomSpawnPos();
-        
+
     }
 
     // Update is called once per frame
@@ -54,19 +54,27 @@ public class Target : MonoBehaviour
 
     }
     private void OnMouseDown()
-    { 
-        GameManager.instance.UpdateScore(5);
-    
+    {
+        if (!GameManager.instance.isGameActive) return;
+        GameManager.instance.UpdateScore(pointValue);
+        Instantiate(explosionParticle,
+            transform.position, explosionParticle.transform.rotation
+            );
         Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
+        if (!gameObject.CompareTag("Bad"))
+        {
+            GameManager.instance.GameOver();
+        }
 
     }
-
 }
+
+
 
 
             
