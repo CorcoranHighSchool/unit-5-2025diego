@@ -24,12 +24,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isGameActive = true;
-        StartCoroutine(SpawnTarget());
-        UpdateScore(0);
-        gameOverText.gameObject.SetActive(false);
-        restartButton.gameObject.SetActive(false);
-
+        
     }
     public void GameOver() { 
         gameOverText.gameObject.SetActive(true);
@@ -55,10 +50,17 @@ public class GameManager : MonoBehaviour
             int index = Random.Range(0, prefabs.Length);
             //spawnTarget
             Instantiate(prefabs[index]);
-            UpdateScore(5);
         }
     }
+    public void StartGame(int difficulty){
+        spawnRate /= difficulty;
+        isGameActive = true;
+        StartCoroutine(SpawnTarget());
+        UpdateScore(0);
+        gameOverText.gameObject.SetActive(false);
+        restartButton.gameObject.SetActive(false);
 
+    }
 }
    
    
